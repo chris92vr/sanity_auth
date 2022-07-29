@@ -19,8 +19,7 @@ export default {
       name: 'budget_id',
       title: 'Budget',
       type: 'reference',
-      to: ['budget'],
-      validation: (Rule) => Rule.required(),
+      to: [{ type: 'budget' }],
     },
     {
       name: 'createdAt',

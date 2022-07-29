@@ -19,8 +19,7 @@ export default {
       name: 'user_id',
       title: 'User',
       type: 'reference',
-      to: ['user'],
-      validation: (Rule) => Rule.required(),
+      to: [{ type: 'user' }],
     },
   ],
 };
