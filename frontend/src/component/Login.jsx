@@ -25,6 +25,8 @@ const Login = () => {
       userName: name,
       image: picture,
     };
+    localStorage.setItem('username', JSON.stringify(doc.userName));
+    localStorage.setItem('userid', JSON.stringify(doc._id));
 
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });

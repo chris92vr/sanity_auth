@@ -16,10 +16,17 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'user_id',
-      title: 'User',
+      name: 'createdBy',
+      title: 'Created by',
       type: 'reference',
-      to: [{ type: 'user' }],
+      to: { type: 'user' },
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      max: 'max',
+      user_id: 'user_id',
+    },
+  },
 };
