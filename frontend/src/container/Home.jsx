@@ -11,9 +11,11 @@ const Home = () => {
 
   useEffect(() => {
     const getBudgets = async () => {
-      client.fetch('*[_type == "budget"]').then((res) => {
-        setBudgets(res);
-      });
+      client
+        .fetch('*[_type == "budget" && references(' + userid + ') ]')
+        .then((res) => {
+          setBudgets(res);
+        });
     };
     getBudgets();
   }, []);
@@ -33,6 +35,7 @@ const Home = () => {
               />
               <h1>Title: {Budget.title}</h1>
               <h1>Created by: {Budget.createdBy._ref}</h1>
+              <h1>Total Amount: {Budget.createdBy._type}</h1>
             </>
           ))
         : null}
