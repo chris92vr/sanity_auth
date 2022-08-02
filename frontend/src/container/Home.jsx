@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Stack } from 'react-bootstrap';
+import { Button, Container, Stack } from 'react-bootstrap';
 import { client } from '../client';
 import BudgetCard from '../component/BudgetCard';
 import CurrentDate from '../component/CurrentDate';
+import AddBudgetButton from '../component/AddBudgetButton';
 
-const Home = () => {
+function Home() {
+  const [showAddBudgetButton, setShowAddBudgetButton] = useState(false);
+
   const user = localStorage.getItem('username').split('"')[1];
   const userid = localStorage.getItem('userid');
 
@@ -33,6 +36,18 @@ const Home = () => {
         <Stack direction="horizontal" className="mt-4 mb-4">
           <h1> Hi {user}!</h1>
         </Stack>
+        <Stack direction="horizontal" gap="2" className="mt-4 mb-4">
+          <Button
+            variant="primary"
+            onClick={() => setShowAddBudgetButton(true)}
+          >
+            Add Budget
+          </Button>
+        </Stack>
+        <AddBudgetButton
+          show={showAddBudgetButton}
+          handleClose={() => setShowAddBudgetButton(false)}
+        />
         {Array.isArray(Budgets)
           ? Budgets.map((Budget) => (
               <>
@@ -48,6 +63,6 @@ const Home = () => {
       </Container>
     </>
   );
-};
+}
 
 export default Home;

@@ -5,17 +5,24 @@ import { client } from '../client';
 export default function AddBudgetButton({ show, handleClose }) {
   const [name, setName] = useState('');
   const [max, setMax] = useState('');
-
+  console.log(localStorage.getItem('userid'));
+  const userid = localStorage.getItem('userid').split('"')[1];
   const submit = (e) => {
     e.preventDefault();
     const doc = {
+      _id: Math.random().toString(),
       title: name,
-      max: max,
+      max: parseInt(max),
+      totalAmount: 0,
       _type: 'budget',
-      createdBy: localStorage.getItem('userid'),
+      createdBy: {
+        _type: 'reference',
+        _ref: userid,
+      },
     };
     client.createIfNotExists(doc).then(() => {
       handleClose();
+      console.log(`Created budget with id: ${doc._id}`);
     });
   };
 
