@@ -2,6 +2,7 @@ export default {
   name: 'budget',
   title: 'Budget',
   type: 'document',
+  liveEdit: 'true',
   fields: [
     {
       name: 'title',
@@ -16,17 +17,19 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'totalAmount',
+      title: 'Total Amount',
+      type: 'number',
+      initial: 0,
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'createdBy',
       title: 'Created by',
       type: 'reference',
       to: { type: 'user' },
+
+      validation: (Rule) => Rule.required(),
     },
   ],
-  preview: {
-    select: {
-      title: 'title',
-      max: 'max',
-      user_id: 'user_id',
-    },
-  },
 };
