@@ -12,15 +12,19 @@ const App = () => {
       localStorage.getItem('user') !== 'undefined'
         ? JSON.parse(localStorage.getItem('user'))
         : localStorage.clear();
-
-    if (!User) navigate('/login');
+    console.log(User);
+    if (User) {
+      navigate('/home');
+    } else {
+      navigate('/login');
+    }
   }, []);
 
   return (
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="/*" element={<Home />} />
+        <Route path="/*" element={<Login />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </GoogleOAuthProvider>
   );

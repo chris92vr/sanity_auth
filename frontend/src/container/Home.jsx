@@ -4,15 +4,23 @@ import { client } from '../client';
 import BudgetCard from '../component/BudgetCard';
 import CurrentDate from '../component/CurrentDate';
 import AddBudgetButton from '../component/AddBudgetButton';
+import AddExpenseButton from '../component/addExpenseButton';
 
 function Home() {
   const [showAddBudgetButton, setShowAddBudgetButton] = useState(false);
+  const [showAddExpenseButton, setShowAddExpenseButton] = useState(false);
+  const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState();
 
   const user = localStorage.getItem('username').split('"')[1];
   const userid = localStorage.getItem('userid');
 
   console.log(user);
   const [Budgets, setBudgets] = useState([]);
+
+  function openAddExpenseModal(budgetId) {
+    setShowAddExpenseButton(true);
+    setAddExpenseModalBudgetId(budgetId);
+  }
 
   useEffect(() => {
     const getBudgets = async () => {
@@ -43,10 +51,18 @@ function Home() {
           >
             Add Budget
           </Button>
+          <Button variant="outline-primary" onClick={openAddExpenseModal}>
+            Add Expense
+          </Button>
         </Stack>
         <AddBudgetButton
           show={showAddBudgetButton}
           handleClose={() => setShowAddBudgetButton(false)}
+        />
+        <AddExpenseButton
+          show={showAddExpenseButton}
+          defaultBudgetId={addExpenseModalBudgetId}
+          handleClose={() => setShowAddExpenseButton(false)}
         />
         {Array.isArray(Budgets)
           ? Budgets.map((Budget) => (
