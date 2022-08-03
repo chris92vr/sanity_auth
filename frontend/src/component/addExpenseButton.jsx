@@ -27,6 +27,7 @@ export default function AddExpenseButton({
         _ref: budget_id,
       },
     };
+
     client.createIfNotExists(doc).then(() => {
       handleClose();
       console.log(`Created expense with id: ${doc._id}`);
