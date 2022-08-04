@@ -32,6 +32,11 @@ export default function AddExpenseButton({
       handleClose();
       console.log(`Created expense with id: ${doc._id}`);
     });
+    client
+      .patch(budget_id)
+      .inc({ totalAmount: parseFloat(amount) })
+      .commit()
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
