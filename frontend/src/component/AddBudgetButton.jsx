@@ -23,6 +23,11 @@ export default function AddBudgetButton({ show, handleClose }) {
     client.createIfNotExists(doc).then(() => {
       handleClose();
       console.log(`Created budget with id: ${doc._id}`);
+      client
+        .patch(userid)
+        .inc({ totalMax: parseInt(max) })
+        .commit()
+        .catch((err) => console.log(err));
     });
   };
 

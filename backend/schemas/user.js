@@ -14,5 +14,17 @@ export default {
       title: 'Image',
       type: 'string',
     },
+    {
+      name: 'totalMax',
+      title: 'Total Max',
+      initial: 0,
+      type: 'number',
+    },
+    {
+      name: 'totalAmount',
+      title: 'Total Amount',
+      initial: 0,
+      type: 'number',
+    },
   ],
 };

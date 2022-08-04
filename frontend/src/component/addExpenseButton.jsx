@@ -12,6 +12,7 @@ export default function AddExpenseButton({
   const [budget_id, setBudget_id] = useState('');
   const [budgets, setBudgets] = useState([]);
   const userid = localStorage.getItem('userid');
+  const useri = localStorage.getItem('userid').split('"')[1];
 
   const submit = (e) => {
     e.preventDefault();
@@ -31,6 +32,11 @@ export default function AddExpenseButton({
     client.createIfNotExists(doc).then(() => {
       handleClose();
       console.log(`Created expense with id: ${doc._id}`);
+      client
+        .patch(useri)
+        .inc({ totalAmount: parseFloat(amount) })
+        .commit()
+        .catch((err) => console.log(err));
     });
     client
       .patch(budget_id)
