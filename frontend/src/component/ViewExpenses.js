@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from 'react';
+
+import { Modal, Button, Stack } from 'react-bootstrap';
+import { client } from '../client';
+import { currencyFormatter } from '../utils';
+
+function deleteBudget(budgetId) {}
+
+function deleteExpense(expenseId) {}
+
+function ViewExpenses({ budgetId, handleClose }) {
+  const [expenses, setExpenses] = useState([]);
+  const [createdAt, setCreatedAt] = useState('');
+  console.log('budgetId: ', budgetId);
+  budgetId = JSON.stringify(budgetId);
+
+  useEffect(() => {
+    const getExpenses = async () => {
+      client
+        .fetch('*[_type == "expense"  && references(' + budgetId + ') ]')
+        .then((data) => {
+          setExpenses(data);
+          setCreatedAt(data.createdAt.format('DD-MM-YYYY hh:mm:ss.SSS A'));
+          console.log('data: ', data);
+        });
+    };
+
+    getExpenses();
+  }, [budgetId]);
+
+  return (
+    <Modal show={budgetId != null} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>
+          <Stack direction="horizontal" gap="2">
+            <div>Expenses </div>
+
+            <Button
+              onClick={() => {
+                deleteBudget(budgetId);
+                handleClose();
+              }}
+              variant="outline-danger"
+            >
+              Delete
+            </Button>
+          </Stack>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Stack direction="vertical" gap="3">
+          {Array.isArray(expenses)
+            ? expenses.map((expense) => (
+                <Stack direction="horizontal" gap="2" key={expense._id}>
+                  <div className="me-auto fs-4">
+                    {expense.title} - {expense.createdAt}
+                  </div>
+                  <div className="fs-5">
+                    {currencyFormatter.format(expense.amount)}
+                  </div>
+                  <Button
+                    onClick={() => deleteExpense(expense.expense_id)}
+                    size="sm"
+                    variant="outline-danger"
+                  >
+                    &times;
+                  </Button>
+                </Stack>
+              ))
+            : null}
+        </Stack>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
+export default ViewExpenses;
