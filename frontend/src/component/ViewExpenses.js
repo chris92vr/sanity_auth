@@ -4,15 +4,58 @@ import { Modal, Button, Stack } from 'react-bootstrap';
 import { client } from '../client';
 import { currencyFormatter } from '../utils';
 
-function deleteBudget(budgetId) {}
-
-function deleteExpense(expenseId) {}
+function deleteBudget(budgetId) {
+  client
+    .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
+    .then((data) => {
+      client.delete(data[0]._id);
+    });
+}
 
 function ViewExpenses({ budgetId, handleClose }) {
   const [expenses, setExpenses] = useState([]);
-  const [createdAt, setCreatedAt] = useState('');
+  const useri = localStorage.getItem('userid').split('"')[1];
+  const [totalAmount, setTotalAmount] = useState('');
+  const [budgetI, setBudgetId] = useState('');
+
   console.log('budgetId: ', budgetId);
   budgetId = JSON.stringify(budgetId);
+
+  function DeleteExpense(expenseId) {
+    console.log('expenseId: ', expenseId);
+    const budgetIdi = budgetId.split('"')[1];
+    const getExpenses = async () => {
+      client
+        .fetch('*[_type == "expense" && _id == "' + expenseId + '"]')
+        .then((data) => {
+          setTotalAmount(data[0].amount);
+          console.log('expense amount: ', data[0].amount);
+          console.log('total amount: ', totalAmount);
+        });
+    };
+    getExpenses();
+    const getBudgets = async () => {
+      client
+        .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
+        .then((data) => {
+          console.log('data: ', data);
+          setBudgetId(data[0]._id);
+          console.log('budget id: ', budgetI);
+        });
+    };
+    getBudgets();
+
+    client
+      .patch(budgetIdi)
+      .dec({ totalAmount: parseFloat(totalAmount) })
+      .commit()
+      .catch((err) => console.log(err));
+    client
+      .patch(useri)
+      .dec({ totalAmount: parseFloat(totalAmount) })
+      .commit()
+      .catch((err) => console.log(err));
+  }
 
   useEffect(() => {
     const getExpenses = async () => {
@@ -20,7 +63,7 @@ function ViewExpenses({ budgetId, handleClose }) {
         .fetch('*[_type == "expense"  && references(' + budgetId + ') ]')
         .then((data) => {
           setExpenses(data);
-          setCreatedAt(data.createdAt.format('DD-MM-YYYY hh:mm:ss.SSS A'));
+
           console.log('data: ', data);
         });
     };
@@ -53,13 +96,13 @@ function ViewExpenses({ budgetId, handleClose }) {
             ? expenses.map((expense) => (
                 <Stack direction="horizontal" gap="2" key={expense._id}>
                   <div className="me-auto fs-4">
-                    {expense.title} - {expense.createdAt}
+                    {expense.title} - {expense.createdAt.split('T')[0]}
                   </div>
                   <div className="fs-5">
                     {currencyFormatter.format(expense.amount)}
                   </div>
                   <Button
-                    onClick={() => deleteExpense(expense.expense_id)}
+                    onClick={() => DeleteExpense(expense._id)}
                     size="sm"
                     variant="outline-danger"
                   >

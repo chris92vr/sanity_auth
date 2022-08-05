@@ -37,12 +37,13 @@ export default function AddExpenseButton({
         .inc({ totalAmount: parseFloat(amount) })
         .commit()
         .catch((err) => console.log(err));
+      client
+        .patch(budget_id)
+        .inc({ totalAmount: parseFloat(amount) })
+        .commit()
+        .catch((err) => console.log(err));
+      window.location.reload(false);
     });
-    client
-      .patch(budget_id)
-      .inc({ totalAmount: parseFloat(amount) })
-      .commit()
-      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

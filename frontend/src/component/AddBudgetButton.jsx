@@ -28,6 +28,7 @@ export default function AddBudgetButton({ show, handleClose }) {
         .inc({ totalMax: parseInt(max) })
         .commit()
         .catch((err) => console.log(err));
+      window.location.reload();
     });
   };
 
