@@ -97,7 +97,11 @@ function Home() {
                   amount={Budget.totalAmount}
                   max={Budget.max}
                   onViewExpensesClick={() =>
-                    setViewExpensesModalBudgetId(Budget._id)
+                    setViewExpensesModalBudgetId(
+                      Budget._id,
+                      Budget.totalAmount,
+                      Budget.max
+                    )
                   }
                 />
               </>

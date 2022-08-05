@@ -15,7 +15,6 @@ function deleteBudget(budgetId) {
 function ViewExpenses({ budgetId, handleClose }) {
   const [expenses, setExpenses] = useState([]);
   const useri = localStorage.getItem('userid').split('"')[1];
-  const [totalAmount, setTotalAmount] = useState('');
   const [budgetI, setBudgetId] = useState('');
 
   console.log('budgetId: ', budgetId);
@@ -24,37 +23,36 @@ function ViewExpenses({ budgetId, handleClose }) {
   function DeleteExpense(expenseId) {
     console.log('expenseId: ', expenseId);
     const budgetIdi = budgetId.split('"')[1];
-    const getExpenses = async () => {
-      client
-        .fetch('*[_type == "expense" && _id == "' + expenseId + '"]')
-        .then((data) => {
-          setTotalAmount(data[0].amount);
-          console.log('expense amount: ', data[0].amount);
-          console.log('total amount: ', totalAmount);
-        });
-    };
-    getExpenses();
-    const getBudgets = async () => {
-      client
-        .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
-        .then((data) => {
-          console.log('data: ', data);
-          setBudgetId(data[0]._id);
-          console.log('budget id: ', budgetI);
-        });
-    };
-    getBudgets();
-
     client
-      .patch(budgetIdi)
-      .dec({ totalAmount: parseFloat(totalAmount) })
-      .commit()
-      .catch((err) => console.log(err));
+      .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
+      .then((data) => {
+        console.log('data: ', data);
+        setBudgetId(data[0]._id);
+        console.log('budget id: ', budgetI);
+      });
     client
-      .patch(useri)
-      .dec({ totalAmount: parseFloat(totalAmount) })
-      .commit()
-      .catch((err) => console.log(err));
+      .fetch('*[_type == "expense" && _id == "' + expenseId + '"]')
+      .then((data) => {
+        console.log('expense data: ', data[0].amount);
+        client
+          .patch(useri)
+          .dec({ totalAmount: parseFloat(data[0].amount) })
+          .commit()
+          .catch((err) => console.log(err));
+        client
+          .patch(budgetIdi)
+          .dec({ totalAmount: parseFloat(data[0].amount) })
+          .commit()
+          .catch((err) => console.log(err));
+      })
+      .then(() => {
+        client
+          .delete(expenseId)
+          .then(() => {
+            console.log('deleted');
+          })
+          .catch((err) => console.log(err));
+      });
   }
 
   useEffect(() => {
