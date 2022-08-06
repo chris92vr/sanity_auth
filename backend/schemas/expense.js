@@ -20,6 +20,7 @@ export default {
       name: 'budget_id',
       title: 'Budget',
       type: 'reference',
+      weak: true,
       to: [{ type: 'budget' }],
     },
     {
