@@ -26,6 +26,7 @@ export default function AddExpenseButton({
       budget_id: {
         _type: 'reference',
         _ref: budget_id,
+        _weak: true,
       },
     };
 
@@ -42,7 +43,7 @@ export default function AddExpenseButton({
         .inc({ totalAmount: parseFloat(amount) })
         .commit()
         .catch((err) => console.log(err));
-      window.location.reload(false);
+      window.location.reload();
     });
   };
 

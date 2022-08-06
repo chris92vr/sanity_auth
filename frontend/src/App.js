@@ -14,7 +14,7 @@ const App = () => {
         : localStorage.clear();
     console.log(User);
     if (User) {
-      navigate('/home');
+      navigate('/');
     } else {
       navigate('/login');
     }
@@ -23,8 +23,8 @@ const App = () => {
   return (
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
       <Routes>
-        <Route path="/*" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/*" element={<Home />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </GoogleOAuthProvider>
   );

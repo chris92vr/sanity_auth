@@ -4,14 +4,6 @@ import { Modal, Button, Stack } from 'react-bootstrap';
 import { client } from '../client';
 import { currencyFormatter } from '../utils';
 
-function deleteBudget(budgetId) {
-  client
-    .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
-    .then((data) => {
-      client.delete(data[0]._id);
-    });
-}
-
 function ViewExpenses({ budgetId, handleClose }) {
   const [expenses, setExpenses] = useState([]);
   const useri = localStorage.getItem('userid').split('"')[1];
@@ -19,6 +11,35 @@ function ViewExpenses({ budgetId, handleClose }) {
 
   console.log('budgetId: ', budgetId);
   budgetId = JSON.stringify(budgetId);
+
+  function deleteBudget(budgetId) {
+    console.log('budgetIgdsgd: ', budgetId);
+    const budgetIdi = budgetId.split('"')[1];
+
+    client
+      .fetch('*[_type == "expense" && references(' + budgetId + ')]')
+      .then((data) => {
+        console.log('darfasfrta: ', data);
+        data.forEach((data) => {
+          console.log('dadsadta: ', data);
+          client.delete(data._id);
+        });
+      });
+
+    client.delete(budgetIdi);
+    client
+      .fetch('*[_type == "budget" && _id == ' + budgetId + ']')
+      .then((data) => {
+        client
+          .patch(useri)
+          .dec({
+            totalAmount: parseFloat(data[0].totalAmount),
+            totalMax: parseFloat(data[0].max),
+          })
+          .commit()
+          .catch((err) => console.log(err));
+      });
+  }
 
   function DeleteExpense(expenseId) {
     console.log('expenseId: ', expenseId);
@@ -50,6 +71,7 @@ function ViewExpenses({ budgetId, handleClose }) {
           .delete(expenseId)
           .then(() => {
             console.log('deleted');
+            window.location.reload();
           })
           .catch((err) => console.log(err));
       });
