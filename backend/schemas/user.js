@@ -26,5 +26,11 @@ export default {
       initial: 0,
       type: 'number',
     },
+    {
+      name: 'dayOfSalary',
+      title: 'Day Of Salary',
+      initial: 23,
+      type: 'number',
+    },
   ],
 };
