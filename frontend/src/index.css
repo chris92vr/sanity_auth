@@ -10,6 +10,12 @@ body {
   background-color: #f8fafc;
 }
 
+.Button {
+  font-family: 'Segoe UI', sans-serif;
+  color: #212529;
+  background-color: white;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

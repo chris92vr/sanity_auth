@@ -101,7 +101,7 @@ export default function AddExpenseButton({
             </Form.Select>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="primary" type="submit">
+            <Button className="Button" variant="primary" type="submit">
               Add
             </Button>
           </div>

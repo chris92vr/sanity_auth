@@ -49,7 +49,6 @@ function Home() {
           setBudgets(res);
         });
     };
-
     getBudgets();
   }, []);
 
@@ -67,6 +66,7 @@ function Home() {
         <Stack direction="horizontal" gap="2" className="mt-4 mb-4">
           <Button
             variant="primary"
+            className="Button"
             onClick={() => setShowAddBudgetButton(true)}
           >
             Add Budget
@@ -88,32 +88,42 @@ function Home() {
           budgetId={viewExpensesModalBudgetId}
           handleClose={() => setViewExpensesModalBudgetId()}
         />
-        {Array.isArray(Budgets)
-          ? Budgets.map((Budget) => (
-              <>
-                <BudgetCard
-                  key={Budget._id}
-                  name={Budget.title}
-                  amount={Budget.totalAmount}
-                  max={Budget.max}
-                  onViewExpensesClick={() =>
-                    setViewExpensesModalBudgetId(
-                      Budget._id,
-                      Budget.totalAmount,
-                      Budget.max
-                    )
-                  }
-                />
-              </>
-            ))
-          : null}
-        <BudgetCard
-          amount={total_amount}
-          name="Total"
-          gray
-          max={total_max}
-          hideButtons
-        />
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: '1.5rem',
+          }}
+        >
+          {Array.isArray(Budgets)
+            ? Budgets.map((Budget) => (
+                <>
+                  <BudgetCard
+                    key={Budget._id}
+                    name={Budget.title}
+                    amount={Budget.totalAmount}
+                    max={Budget.max}
+                    onAddExpenseClick={() => setShowAddExpenseButton(true)}
+                    onViewExpensesClick={() =>
+                      setViewExpensesModalBudgetId(Budget._id)
+                    }
+                  />
+                </>
+              ))
+            : null}
+          {Budgets === undefined ? <h1>No Budgets</h1> : undefined}
+          {Budgets !== null ? (
+            <>
+              <BudgetCard
+                amount={total_amount}
+                name="Total"
+                gray
+                max={total_max}
+                hideButtons
+              />
+            </>
+          ) : null}
+        </div>
       </Container>
     </>
   );

@@ -29,7 +29,7 @@ const Login = () => {
     localStorage.setItem('userid', JSON.stringify(doc._id));
 
     client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true });
+      navigate('/login', { replace: true });
     });
   };
   return (
