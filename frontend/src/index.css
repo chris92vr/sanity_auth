@@ -16,6 +16,10 @@ body {
   background-color: white;
 }
 
+.logo {
+  max-width: 26rem;
+  border-radius: 3px;
+}
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

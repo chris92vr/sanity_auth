@@ -46,7 +46,7 @@ const Login = () => {
         />
         <div className="absolute top-0 flex flex-col left-0 right-0 bottom-0 bg-blackOverlay justify-center items-center">
           <div className="p-5">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" className="logo" />
           </div>
           <div className="shadow-2xl">
             <GoogleLogin
