@@ -53,6 +53,34 @@ function Home() {
     getBudgets();
   }, []);
 
+  if (!Budgets.length) {
+    return (
+      <div>
+        <Container className="my-4">
+          <Stack direction="center" className="mt-4 mb-4">
+            <img src={logo} alt="logo" className="logo" />
+          </Stack>
+          <Stack className="mt-4 mb-4">
+            <h1>Welcome {user}!</h1>
+            <h1 className="mt-4 mb-4">
+              You have no budgets yet. <br />
+              <Button
+                variant="primary"
+                className="Button mt-3"
+                onClick={() => setShowAddBudgetButton(true)}
+              >
+                Add Budget
+              </Button>
+            </h1>
+          </Stack>
+        </Container>
+        <AddBudgetButton
+          show={showAddBudgetButton}
+          handleClose={() => setShowAddBudgetButton(false)}
+        />
+      </div>
+    );
+  }
   return (
     <>
       <Container className="my-4">
