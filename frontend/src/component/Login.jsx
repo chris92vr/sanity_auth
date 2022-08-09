@@ -33,7 +33,7 @@ const Login = () => {
     });
   };
   return (
-    <div className="flex justify-start items-center flex-col h-screen">
+    <div className="flex justify-start items-center flex-col h-screen container-login">
       <div className="relative w-full h-full">
         <video
           src={shareVideo}
@@ -41,9 +41,10 @@ const Login = () => {
           autoPlay
           loop
           muted
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full video"
           controls={false}
         />
+
         <div className="absolute top-0 flex flex-col left-0 right-0 bottom-0 bg-blackOverlay justify-center items-center">
           <div className="p-5">
             <img src={logo} alt="logo" className="logo" />

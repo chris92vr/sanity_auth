@@ -23,3 +23,19 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.video {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    max-width: 18rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .logo {
+    max-width: 12rem;
+  }
+}

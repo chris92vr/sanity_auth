@@ -6,6 +6,7 @@ import CurrentDate from '../component/CurrentDate';
 import AddBudgetButton from '../component/AddBudgetButton';
 import AddExpenseButton from '../component/addExpenseButton';
 import ViewExpenses from '../component/ViewExpenses';
+import logo from '../assets/logowhite.png';
 
 function Home() {
   const [showAddBudgetButton, setShowAddBudgetButton] = useState(false);
@@ -56,12 +57,12 @@ function Home() {
     <>
       <Container className="my-4">
         <Stack direction="horizontal" className="mt-4 mb-4">
-          <h1 className=" me-auto">Budget Tracker © </h1>
-          <CurrentDate />
+          <img src={logo} alt="logo" className="logo" />
         </Stack>
 
         <Stack direction="horizontal" className="mt-4 mb-4">
           <h1> Hi {user}!</h1>
+          <CurrentDate />
         </Stack>
         <Stack direction="horizontal" gap="2" className="mt-4 mb-4">
           <Button

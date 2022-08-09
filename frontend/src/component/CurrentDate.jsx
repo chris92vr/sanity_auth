@@ -99,14 +99,14 @@ export class CurrentDate extends Component {
             <Modal.Body>
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">
-                  Enter the number of day of the salary
+                  Enter the number of day of the salary:
                 </label>
                 <input
                   type="number"
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  placeholder="Enter the number of day of the salary"
+                  placeholder="Number of day of the salary"
                   onChange={(e) => {
                     this.daySalaary = e.target.value;
                   }}
@@ -115,6 +115,7 @@ export class CurrentDate extends Component {
             </Modal.Body>{' '}
             <Modal.Footer>
               <Button
+                className="Button"
                 variant="primary"
                 onClick={() => {
                   this.getDateToSalary();
@@ -129,6 +130,7 @@ export class CurrentDate extends Component {
               </Button>
 
               <Button
+                className="Button"
                 variant="secondary"
                 onClick={() => {
                   this.setState({ show: false });
