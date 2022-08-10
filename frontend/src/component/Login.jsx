@@ -26,6 +26,7 @@ const Login = () => {
       image: picture,
       totalMax: 0,
       totalAmount: 0,
+      dayOfSalary: 0,
     };
     localStorage.setItem('username', JSON.stringify(doc.userName));
     localStorage.setItem('userid', JSON.stringify(doc._id));
