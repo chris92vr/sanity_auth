@@ -36,9 +36,7 @@ export class CurrentDate extends Component {
         '*[_type == "user" && _id == ' + localStorage.getItem('userid') + ']'
       )
       .then((data) => {
-        console.log('darfasfrta: ', data);
         var dateSal = data[0].dayOfSalary;
-        console.log('darfasfrtasAS: ', data[0].dayOfSalary);
 
         var daysalary = dateSal;
         var dateToSalaryInDays,
@@ -59,10 +57,7 @@ export class CurrentDate extends Component {
             })
             .commit()
             .catch((err) => console.log(err));
-        } else {
-          console.log('day salary', this.daySalaary);
         }
-        console.log('date to salary 2341', dateSal);
       });
   };
 

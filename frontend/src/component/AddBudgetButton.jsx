@@ -5,7 +5,7 @@ import { client } from '../client';
 export default function AddBudgetButton({ show, handleClose }) {
   const [name, setName] = useState('');
   const [max, setMax] = useState('');
-  console.log(localStorage.getItem('userid'));
+
   const userid = localStorage.getItem('userid').split('"')[1];
   const submit = (e) => {
     e.preventDefault();

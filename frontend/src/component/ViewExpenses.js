@@ -9,18 +9,14 @@ function ViewExpenses({ budgetId, handleClose }) {
   const useri = localStorage.getItem('userid').split('"')[1];
 
   budgetId = JSON.stringify(budgetId);
-  console.log('budgetId: ', budgetId);
 
   function deleteBudget(budgetId) {
-    console.log('budgetIgdsgd: ', budgetId);
     const budgetIdi = budgetId.split('"')[1];
     if (budgetId !== undefined) {
       client
         .fetch('*[_type == "expense" && references(' + budgetId + ')]')
         .then((data) => {
-          console.log('darfasfrta: ', data);
           data.forEach((data) => {
-            console.log('dadsadta: ', data);
             client.delete(data._id);
           });
         });
@@ -44,13 +40,11 @@ function ViewExpenses({ budgetId, handleClose }) {
   }
 
   function DeleteExpense(expenseId) {
-    console.log('expenseId: ', expenseId);
     const budgetIdi = budgetId.split('"')[1];
     if (expenseId !== undefined) {
       client
         .fetch('*[_type == "expense" && _id == "' + expenseId + '"]')
         .then((data) => {
-          console.log('expense data: ', data[0].amount);
           client
             .patch(useri)
             .dec({ totalAmount: parseFloat(data[0].amount) })
@@ -66,7 +60,6 @@ function ViewExpenses({ budgetId, handleClose }) {
           client
             .delete(expenseId)
             .then(() => {
-              console.log('deleted');
               window.location.reload();
               window.alert('Expense deleted!');
             })
@@ -81,11 +74,8 @@ function ViewExpenses({ budgetId, handleClose }) {
         .fetch('*[_type == "expense"  && references(' + budgetId + ') ]')
         .then((data) => {
           setExpenses(data);
-
-          console.log('data: ', data);
         });
     };
-
     getExpenses();
   }, [budgetId]);
 
